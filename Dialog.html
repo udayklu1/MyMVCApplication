@@ -1,0 +1,139 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+      <script src="References/js/jquery.min.js"></script>
+	  <script src="References/js/jquery-ui.min.js"></script>
+	  <link rel="stylesheet" href="References/styles/jquery-ui.css" type="text/css" />
+	  <script type="text/javascript" src="References/js/bootstrap.min.js"></script>
+	  <script rel="stylesheet" type="styles/bootstrap" href="References/styles/bootstrap.min.css"></script>
+	  <script type="text/javascript" src="References/Scripts/jsUser.js"></script>
+	  <link rel="stylesheet" type="text/css" href="References/styles/bootstrap.min.css">
+	  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+ <style type="text/css">
+   #dialog-box{
+    height: 100% !important;
+    width: 40%;
+    position:relative;
+   }
+#tab {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+.ui-widget-header{border: 0px solid #337ab7;
+      color: #ffffff;}
+.ui-dialog {
+              height:auto !important;
+            }
+#closeBtn{ 
+    color: #00b9f5;
+    line-height: 25px;
+    position: absolute;
+    text-align: right;
+    top: -2px;
+    left: 72px;
+    width: 24px;
+    font-size: 19px;
+    text-decoration: none;
+    font-weight: 700;
+    cursor: pointer;}
+ </style>
+</head>
+<body>
+     <div id="dialog-box"  ng-app="ngMyApp">
+
+       <ul id="tabs">
+          <li><a href="javascript:void(0)" id="tbLogin" class="tablinks" onclick="openCity(event, 'London')">Login</a></li>
+          <li><a href="javascript:void(0)"  id="tbSignup" class="tablinks" onclick="openCity(event, 'Paris')">Signup</a></li>
+           <li class="ui-tabs-close-button"><label for="close" id="closeBtn">X</label></li>
+        </ul>
+
+    <form id="frmLogin" ng-controller="ctrlLogin" style="display: none;">
+      <fieldset>
+        <label for="Email">Email Id:</label>
+        <input type="text"  name="email" ng-model="strEmailId" class="text ui-widget-content ui-corner-all">
+        <label for="Password">Password:</label>
+        <input type="password" name="password" ng-model="strPassword" class="text ui-widget-content ui-corner-all"/>
+        <button ng-click="ValidateDetails()" ng-model="btnLogin" class="btn btn-primary" style="margin-top: 10px">Login</button>
+        <button  ng-click="fnClose()" ng-model="btnClear" class="btn btn-primary" style="margin-top: 10px">Clear</button>
+      </fieldset>
+    </form>
+
+     <form id="frmSignUp" style="display: none;">
+      <fieldset>
+        <label for="firstname">First Name</label>
+        <input type="text" name="Firstname" ng-model="strFirstname" class="text ui-widget-content ui-corner-all"/>
+        <label for="lastname">Last Name</label>
+        <input type="text" name="Lastname" ng-model="strLastname" class="text ui-widget-content ui-corner-all"/>
+        <label for="Email">Email Id:</label>
+        <input  name="email" ng-model="regEmailId" type="text"/ class="text ui-widget-content ui-corner-all">
+        <label for="Password">Password:</label>
+        <input type="password" name="password" ng-model="strNewPassword" class="text ui-widget-content ui-corner-all"/>
+        <label for="PhoneNumber">Phone Number</label>
+        <input type="number" name="PhoneNumber" ng-model="strPhone" class="text ui-widget-content ui-corne="r-all"/>
+        <input type="submit" name="SignUp" id="btnSignup" value="SignUp" class="btn btn-primary" style="margin-top: 10px" />
+        <input type="button" name="cancel" id="btnCancel" value="Cancel" class="btn btn-primary" style="margin-top: 10px"/>
+      </fieldset>
+    </form>
+  </div>
+
+  <script type="text/javascript">
+  //var EmailId,Password;
+      angular.module("ngMyApp", []).controller("ctrlLogin", function ($scope) {
+          $scope.ValidateDetails = function () {
+              if($scope.strEmailId != "" && $scope.strEmailId != undefined){
+				alert("Email " + $scope.strEmailId );
+				//EmailId=$scope.strEmailId;
+			  }
+              if($scope.strPassword != "" && $scope.strPassword != undefined){
+				alert("Email " + $scope.strPassword );
+				//$scope.strPassword=;
+			  }
+			  
+          }
+          
+      });
+
+      $("#dialog-box").tabs();
+      $('#tbLogin').click(function () {
+          $('#frmSignUp').hide();
+          $('#frmLogin').show();
+      });
+      $('#tbSignup').click(function () {
+          $('#frmLogin').hide();
+          $('#frmSignUp').show();
+      });
+      var x;
+      x = ($(window).width() / 2) - (300 / 2);
+      $('#closeBtn').click(function () {
+          $('#dialog-box').dialog('close');
+      });
+      $('#btnCancel').click(function () {
+          $('#dialog-box').dialog('close');
+      });
+      $(function () {
+          $("#dialog-box").dialog({
+              bgiframe: true,
+              autoOpen: false,
+              height: 250,
+              position: [x, 100],
+              modal: true,
+              draggable: false,
+              resizable: false,
+              width: 300,
+              closeOnEscape: false,
+              open: function (event, ui) { $('#frmLogin').show(); }
+          }).dialog("widget").find(".ui-dialog-title").hide();
+          $('body').bind('click', function (e) {//debugger;
+              if ($('#dialog-box').dialog('isOpen') && !$(e.target).is('.ui-dialog, a') && !$(e.target).closest('.ui-dialog').length) {
+                  //$('#dialog-box').dialog('close');
+              }
+          });
+      });
+
+  </script>
+  <a href="#" onclick="$('#dialog-box').dialog('open'); return false">Login</a>
+</body>
+</html>
